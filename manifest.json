@@ -1,0 +1,16 @@
+{
+  "name": "8 Coffee Gia Lai",
+  "short_name": "8 Coffee",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#fdf5e6",
+  "theme_color": "#8b1a1a",
+  "icons": [
+    {
+      "src": "logo-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
