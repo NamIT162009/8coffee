@@ -11,35 +11,75 @@
         :root {
             --primary: #3d251e; 
             --accent: #bc6c25;  
-            --bg-cream: #fdf5e6; /* Màu nền kem thân thiện */
+            --bg-cream: #fdf5e6;
             --white: #ffffff;
             --brand-red: #8b1a1a;
             --yellow: #f1c40f;
         }
 
-        * { box-sizing: border-box; transition: 0.3s; font-family: 'Quicksand', sans-serif; }
-        body { background-color: var(--bg-cream); margin: 0; color: var(--primary); }
+        * { box-sizing: border-box; font-family: 'Quicksand', sans-serif; margin: 0; padding: 0; }
+        body { background-color: var(--bg-cream); color: var(--primary); overflow-x: hidden; }
+
+        /* --- CÁC HIỆU ỨNG ANIMATION (KEYFRAMES) --- */
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+        
+        @keyframes pulseGlow {
+            0% { box-shadow: 0 0 0 0 rgba(241, 196, 15, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(241, 196, 15, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(241, 196, 15, 0); }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        /* Lớp dùng cho hiệu ứng cuộn chuột (Scroll Reveal) */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease-out;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
 
         /* --- NAVIGATION --- */
         nav {
             padding: 15px 5%; display: flex; justify-content: space-between; align-items: center;
             background: rgba(253, 245, 230, 0.95); position: sticky; top: 0; z-index: 1000;
             box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            backdrop-filter: blur(5px); /* Hiệu ứng kính mờ cho nav */
+            animation: fadeIn 0.8s ease-out;
         }
-        .logo { font-weight: 700; font-size: 24px; color: var(--primary); }
+        .nav-left { display: flex; align-items: center; gap: 12px; }
+        .logo-img { height: 45px; width: auto; border-radius: 8px; transition: transform 0.3s; }
+        .logo-img:hover { transform: rotate(5deg) scale(1.05); }
+        .logo-text { font-weight: 700; font-size: 22px; color: var(--primary); }
+        .nav-phone { font-weight: 600; color: var(--accent); transition: color 0.3s; }
+        .nav-phone:hover { color: var(--brand-red); }
 
-        /* --- BANNER QUẢNG CÁO CHÍNH (TỈ LỆ CHUẨN) --- */
+        /* --- BANNER QUẢNG CÁO CHÍNH --- */
         .brand-banner-container { padding: 20px 5%; max-width: 1300px; margin: 0 auto; }
         .brand-banner-box {
             background: var(--white); border-radius: 25px; overflow: hidden;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1); border: 4px solid var(--accent);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+        .brand-banner-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(188, 108, 37, 0.2);
         }
         .brand-banner-img {
             width: 100%; height: auto; max-height: 550px; display: block;
             object-fit: cover; object-position: center;
+            transition: transform 0.6s ease;
         }
-        .brand-intro { padding: 30px; text-align: center; background: var(--white); }
-        .brand-intro h1 { margin: 0; color: #8b1a1a; font-size: 28px; text-transform: uppercase; }
+        .brand-banner-box:hover .brand-banner-img { transform: scale(1.03); }
+        .brand-intro { padding: 30px; text-align: center; background: var(--white); position: relative; z-index: 2; }
+        .brand-intro h1 { color: #8b1a1a; font-size: 28px; text-transform: uppercase; }
 
         /* --- PHẦN QUY TRÌNH NÂNG CẤP (TABS) --- */
         .process-tab-section { padding: 50px 5%; background: #e67e22; margin: 30px 20px; border-radius: 40px; text-align: center; }
@@ -47,15 +87,17 @@
         .tab-link {
             padding: 15px 25px; border-radius: 15px; border: none; cursor: pointer;
             background: #2c1a15; color: white; font-weight: 700; text-transform: uppercase; font-size: 14px;
+            transition: all 0.3s ease; position: relative; overflow: hidden;
         }
-        .tab-link.active { background: var(--yellow); color: var(--primary); box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+        .tab-link:hover { transform: translateY(-3px); background: #3d251e; }
+        .tab-link.active { background: var(--yellow); color: var(--primary); box-shadow: 0 5px 15px rgba(0,0,0,0.2); transform: scale(1.05); }
         
         .tab-content-box {
             background: var(--bg-cream); color: var(--primary); padding: 40px; 
             border-radius: 30px; max-width: 1000px; margin: 0 auto; text-align: left;
             box-shadow: 0 10px 25px rgba(0,0,0,0.2);
         }
-        .tab-pane { display: none; animation: fadeIn 0.5s; }
+        .tab-pane { display: none; animation: fadeIn 0.5s ease-out; }
         .tab-pane.active { display: block; }
 
         /* NÚT MUA HÀNG THIỆT TO */
@@ -63,60 +105,58 @@
             display: block; width: 100%; max-width: 400px; margin: 30px auto 0;
             background: var(--brand-red); color: white; padding: 20px; border-radius: 50px;
             text-decoration: none; font-weight: 800; font-size: 20px; text-align: center;
-            box-shadow: 0 8px 20px rgba(139, 26, 26, 0.4); border: 2px solid var(--yellow);
+            border: 2px solid var(--yellow);
+            transition: all 0.3s ease;
+            animation: pulseGlow 2s infinite; /* Hiệu ứng nhấp nháy phát sáng */
         }
-        .btn-huge-buy:hover { transform: scale(1.05); background: #a51d1d; }
+        .btn-huge-buy:hover { transform: scale(1.05) translateY(-3px); background: #a51d1d; animation: none; box-shadow: 0 10px 25px rgba(139, 26, 26, 0.5); }
 
         /* --- TÁC DỤNG SỨC KHỎE --- */
         .health-section { background: #3d251e; color: #fdf5e6; padding: 60px 8%; margin: 30px 20px; border-radius: 40px; }
         .benefit-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; margin-top: 35px; }
-        .benefit-card { background: rgba(255,255,255,0.08); padding: 30px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); }
+        .benefit-card { 
+            background: rgba(255,255,255,0.08); padding: 30px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); 
+            transition: all 0.4s ease;
+        }
+        .benefit-card:hover { transform: translateY(-10px); background: rgba(255,255,255,0.15); box-shadow: 0 15px 30px rgba(0,0,0,0.3); }
         .benefit-card h4 { color: var(--yellow); font-size: 22px; margin-top: 0; }
 
-        /* --- GALLERY & PRODUCTS (GIỮ NGUYÊN) --- */
+        /* --- GALLERY & PRODUCTS --- */
         .section-title { text-align: center; margin: 50px 0 30px; font-weight: 700; }
         .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; padding: 0 5%; }
-        .gallery-item { height: 250px; border-radius: 20px; overflow: hidden; }
-        .gallery-item img { width: 100%; height: 100%; object-fit: cover; }
+        .gallery-item { height: 250px; border-radius: 20px; overflow: hidden; cursor: pointer; }
+        .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+        .gallery-item:hover img { transform: scale(1.15) rotate(2deg); } /* Zoom và xoay nhẹ ảnh */
 
         .product-section { background: #faedcd; padding: 60px 5%; margin-top: 50px; border-radius: 50px 50px 0 0; }
         .product-grid { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; }
-        .p-card { background: var(--white); border-radius: 25px; padding: 20px; width: 300px; text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
-        .p-card img { width: 100%; border-radius: 15px; height: 350px; object-fit: cover; }
+        .p-card { 
+            background: var(--white); border-radius: 25px; padding: 20px; width: 300px; text-align: center; 
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: all 0.4s ease;
+        }
+        .p-card:hover { transform: translateY(-12px); box-shadow: 0 15px 35px rgba(0,0,0,0.15); }
+        .p-card img { width: 100%; border-radius: 15px; height: 350px; object-fit: cover; transition: transform 0.4s; }
+        .p-card:hover img { transform: scale(1.03); }
 
-        .btn-zalo { background: var(--accent); color: white; padding: 12px 25px; border-radius: 50px; text-decoration: none; font-weight: 600; display: inline-block; margin-top: 15px; }
+        .btn-zalo { 
+            background: var(--accent); color: white; padding: 12px 25px; border-radius: 50px; 
+            text-decoration: none; font-weight: 600; display: inline-block; margin-top: 15px; transition: all 0.3s;
+        }
+        .btn-zalo:hover { background: #d07d2c; transform: scale(1.05); }
 
         footer { background: var(--primary); color: #d0c4bc; padding: 40px 5%; text-align: center; }
 
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-        /* Nút liên hệ nhanh */
-        .contact-bar { position: fixed; bottom: 20px; right: 20px; display: flex; flex-direction: column; gap: 10px; z-index: 2000; }
-        .icon-link { width: 55px; height: 55px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 22px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
-  .nav-left {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-.logo-img {
-    height: 45px;        /* chỉnh to nhỏ logo ở đây */
-    width: auto;
-    border-radius: 8px;
-}
-
-.logo-text {
-    font-weight: 700;
-    font-size: 22px;
-    color: var(--primary);
-}
-
-.nav-phone {
-    font-weight: 600;
-    color: var(--accent);
-}
-  </style>
-    
+        /* Nút liên hệ nhanh (Trôi nổi) */
+        .contact-bar { position: fixed; bottom: 20px; right: 20px; display: flex; flex-direction: column; gap: 15px; z-index: 2000; }
+        .icon-link { 
+            width: 55px; height: 55px; border-radius: 50%; display: flex; align-items: center; justify-content: center; 
+            color: white; font-size: 22px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); transition: all 0.3s ease;
+            animation: float 3s ease-in-out infinite; /* Cho nút lơ lửng */
+        }
+        /* Tạo delay cho nút dưới để lơ lửng so le nhau */
+        .icon-link:nth-child(2) { animation-delay: 1.5s; }
+        .icon-link:hover { transform: scale(1.15) !important; animation-play-state: paused; }
+    </style>
 </head>
 <body>
 
@@ -125,10 +165,10 @@
             <img src="logo.png" alt="8 Coffee Logo" class="logo-img">
             <span class="logo-text">8 COFFEE GIA LAI</span>
         </div>
-        <div class="nav-phone">0367 832 532</div>
+        <div class="nav-phone"><i class="fas fa-phone-alt"></i> 0367 832 532</div>
     </nav>
 
-    <section class="brand-banner-container">
+    <section class="brand-banner-container reveal">
         <div class="brand-banner-box">
             <img src="z7557678681207_670f0a15142d57bc1e0e0f458db9ceca.jpg" alt="Bảng hiệu 8 Coffee" class="brand-banner-img">
             <div class="brand-intro">
@@ -141,15 +181,15 @@
         </div>
     </section>
 
-    <section class="process-tab-section">
+    <section class="process-tab-section reveal">
         <h2 style="color: white; font-size: 28px; margin-bottom: 30px;">Quy Trình Tạo Nên Giọt Cà Phê Tuyệt Hảo</h2>
         
         <div class="tab-menu">
-            <button class="tab-link active" onclick="openTab(event, 'step1')">Trồng Trọt</button>
-            <button class="tab-link" onclick="openTab(event, 'step2')">Thu Hoạch</button>
-            <button class="tab-link" onclick="openTab(event, 'step3')">Phơi Sấy</button>
-            <button class="tab-link" onclick="openTab(event, 'step4')">Rang Xay</button>
-            <button class="tab-link" onclick="openTab(event, 'step5')">Đóng Bì</button>
+            <button class="tab-link active" onclick="openTab(event, 'step1')"><i class="fas fa-seedling"></i> Trồng Trọt</button>
+            <button class="tab-link" onclick="openTab(event, 'step2')"><i class="fas fa-hand-holding-heart"></i> Thu Hoạch</button>
+            <button class="tab-link" onclick="openTab(event, 'step3')"><i class="fas fa-sun"></i> Phơi Sấy</button>
+            <button class="tab-link" onclick="openTab(event, 'step4')"><i class="fas fa-fire"></i> Rang Xay</button>
+            <button class="tab-link" onclick="openTab(event, 'step5')"><i class="fas fa-box"></i> Đóng Bì</button>
         </div>
 
         <div class="tab-content-box">
@@ -185,56 +225,56 @@
         </div>
     </section>
 
-    <section class="health-section">
+    <section class="health-section reveal">
         <h2 style="text-align: center; color: var(--yellow); font-size: 32px; margin-top: 0;">Lợi Ích Tuyệt Vời Của Cà Phê Nguyên Chất</h2>
         <p style="text-align: center; max-width: 900px; margin: 0 auto; line-height: 2; font-size: 17px; opacity: 0.9;">
             Cà phê sạch không chỉ là một thức uống để tỉnh táo, nó là một "siêu thực phẩm" từ thiên nhiên nếu được chế biến đúng cách. Khi bạn uống cà phê nguyên chất từ xưởng Đào Văn Long, bạn đang nạp vào cơ thể những dưỡng chất tinh túy nhất.
         </p>
         
         <div class="benefit-grid">
-            <div class="benefit-card">
+            <div class="benefit-card reveal" style="transition-delay: 0.1s;">
                 <h4>🚀 Đỉnh cao của sự tập trung</h4>
                 <p>Hàm lượng Caffeine tự nhiên giúp kích hoạt não bộ nhanh chóng, tăng khả năng sáng tạo và giải quyết vấn đề hiệu quả. Một ly cà phê vào buổi sáng là "chìa khóa" cho một ngày làm việc bùng nổ.</p>
             </div>
-            <div class="benefit-card">
+            <div class="benefit-card reveal" style="transition-delay: 0.2s;">
                 <h4>🔥 Đốt cháy mỡ thừa tự nhiên</h4>
                 <p>Cà phê nguyên chất thúc đẩy quá trình trao đổi chất tăng từ 3-11%, hỗ trợ gan giải độc và giúp cơ thể đốt cháy năng lượng dư thừa hiệu quả hơn trong quá trình vận động.</p>
             </div>
-            <div class="benefit-card">
+            <div class="benefit-card reveal" style="transition-delay: 0.3s;">
                 <h4>🛡️ Khiên chắn chống lão hóa</h4>
                 <p>Chứa hàm lượng chất chống oxy hóa cực cao (Polyphenols), giúp bảo vệ tế bào khỏi các gốc tự do, làm chậm quá trình lão hóa da và tăng cường hệ miễn dịch cho cơ thể.</p>
             </div>
-            <div class="benefit-card">
+            <div class="benefit-card reveal" style="transition-delay: 0.4s;">
                 <h4>❤️ Trái tim khỏe mạnh mỗi ngày</h4>
                 <p>Nghiên cứu chỉ ra rằng sử dụng cà phê sạch điều độ giúp làm bền thành mạch máu, giảm nguy cơ mắc các bệnh về tim mạch và giúp tinh thần luôn lạc quan, giảm căng thẳng (stress).</p>
             </div>
         </div>
     </section>
 
-    <h2 class="section-title">Hình ảnh thực tế từ xưởng</h2>
+    <h2 class="section-title reveal">Hình ảnh thực tế từ xưởng</h2>
     <div class="gallery-grid">
-        <div class="gallery-item"><img src="z7557649669401_518b8f26124c21a16431dbcffc335d8e.jpg" alt="Thành phẩm"></div>
-        <div class="gallery-item"><img src="z7557650111027_bd76cf44787b8a97e95a6e79ec340b35.jpg" alt="Ly cafe"></div>
-        <div class="gallery-item"><img src="z7557653311950_c42799bba28e29069a5d6b41bcc3dde2.jpg" alt="Phơi cafe"></div>
-        <div class="gallery-item"><img src="z7557654183977_22ea85b513aa51c0d5f0095357f2e669.jpg" alt="Đóng gói"></div>
+        <div class="gallery-item reveal" style="transition-delay: 0.1s;"><img src="z7557649669401_518b8f26124c21a16431dbcffc335d8e.jpg" alt="Thành phẩm"></div>
+        <div class="gallery-item reveal" style="transition-delay: 0.2s;"><img src="z7557650111027_bd76cf44787b8a97e95a6e79ec340b35.jpg" alt="Ly cafe"></div>
+        <div class="gallery-item reveal" style="transition-delay: 0.3s;"><img src="z7557653311950_c42799bba28e29069a5d6b41bcc3dde2.jpg" alt="Phơi cafe"></div>
+        <div class="gallery-item reveal" style="transition-delay: 0.4s;"><img src="z7557654183977_22ea85b513aa51c0d5f0095357f2e669.jpg" alt="Đóng gói"></div>
     </div>
 
-    <section class="product-section" id="muahang">
+    <section class="product-section reveal" id="muahang">
         <h2 class="section-title" style="margin-top: 0;">Sản phẩm tâm huyết từ xưởng</h2>
         <div class="product-grid">
-            <div class="p-card">
+            <div class="p-card reveal" style="transition-delay: 0.2s;">
                 <img src="bac.jpg" alt="Túi Bạc">
                 <h3>Túi Bạc (Original)</h3>
                 <p>Gu đậm đà, chuẩn vị Gia Lai</p>
                 <span style="font-size: 24px; font-weight: 700; color: var(--accent);">250.000đ</span><br>
-                <a href="https://zalo.me/0367832532" class="btn-zalo">Đặt hàng Zalo</a>
+                <a href="https://zalo.me/0367832532" class="btn-zalo"><i class="fas fa-shopping-cart"></i> Đặt hàng Zalo</a>
             </div>
-            <div class="p-card">
+            <div class="p-card reveal" style="transition-delay: 0.4s;">
                 <img src="trang.jpg" alt="Túi Trắng">
                 <h3>Túi Trắng (Premium)</h3>
                 <p>Hương thơm thanh tao, hậu ngọt</p>
                 <span style="font-size: 24px; font-weight: 700; color: var(--accent);">320.000đ</span><br>
-                <a href="https://zalo.me/0367832532" class="btn-zalo">Đặt hàng Zalo</a>
+                <a href="https://zalo.me/0367832532" class="btn-zalo"><i class="fas fa-shopping-cart"></i> Đặt hàng Zalo</a>
             </div>
         </div>
     </section>
@@ -252,19 +292,45 @@
     </div>
 
     <script>
+        // 1. Script cho chức năng Tabs
         function openTab(evt, tabName) {
             var i, tabpane, tablinks;
             tabpane = document.getElementsByClassName("tab-pane");
             for (i = 0; i < tabpane.length; i++) {
                 tabpane[i].style.display = "none";
+                tabpane[i].classList.remove("active");
             }
             tablinks = document.getElementsByClassName("tab-link");
             for (i = 0; i < tablinks.length; i++) {
                 tablinks[i].className = tablinks[i].className.replace(" active", "");
             }
             document.getElementById(tabName).style.display = "block";
+            // Kích hoạt animation khi mở tab
+            setTimeout(() => { document.getElementById(tabName).classList.add("active"); }, 10);
             evt.currentTarget.className += " active";
         }
+
+        // 2. Script kích hoạt animation khi cuộn trang (Scroll Reveal)
+        document.addEventListener("DOMContentLoaded", function() {
+            const reveals = document.querySelectorAll(".reveal");
+
+            const revealOnScroll = new IntersectionObserver(function(entries, observer) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("active");
+                        // Ngừng theo dõi sau khi đã hiện lên để tối ưu hiệu suất
+                        observer.unobserve(entry.target); 
+                    }
+                });
+            }, { 
+                threshold: 0.15, // Hiện khi 15% phần tử lọt vào màn hình
+                rootMargin: "0px 0px -50px 0px" 
+            });
+
+            reveals.forEach(reveal => {
+                revealOnScroll.observe(reveal);
+            });
+        });
     </script>
 </body>
 </html>
