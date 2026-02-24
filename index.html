@@ -20,7 +20,7 @@
         * { box-sizing: border-box; font-family: 'Quicksand', sans-serif; margin: 0; padding: 0; }
         body { background-color: var(--bg-cream); color: var(--primary); overflow-x: hidden; }
 
-        /* --- CÁC HIỆU ỨNG ANIMATION (KEYFRAMES) --- */
+
         @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
         
         @keyframes pulseGlow {
@@ -35,7 +35,7 @@
             100% { transform: translateY(0px); }
         }
 
-        /* Lớp dùng cho hiệu ứng cuộn chuột (Scroll Reveal) */
+      
         .reveal {
             opacity: 0;
             transform: translateY(50px);
@@ -46,12 +46,11 @@
             transform: translateY(0);
         }
 
-        /* --- NAVIGATION --- */
         nav {
             padding: 15px 5%; display: flex; justify-content: space-between; align-items: center;
             background: rgba(253, 245, 230, 0.95); position: sticky; top: 0; z-index: 1000;
             box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            backdrop-filter: blur(5px); /* Hiệu ứng kính mờ cho nav */
+            backdrop-filter: blur(5px); 
             animation: fadeIn 0.8s ease-out;
         }
         .nav-left { display: flex; align-items: center; gap: 12px; }
@@ -61,7 +60,7 @@
         .nav-phone { font-weight: 600; color: var(--accent); transition: color 0.3s; }
         .nav-phone:hover { color: var(--brand-red); }
 
-        /* --- BANNER QUẢNG CÁO CHÍNH --- */
+     
         .brand-banner-container { padding: 20px 5%; max-width: 1300px; margin: 0 auto; }
         .brand-banner-box {
             background: var(--white); border-radius: 25px; overflow: hidden;
@@ -81,7 +80,6 @@
         .brand-intro { padding: 30px; text-align: center; background: var(--white); position: relative; z-index: 2; }
         .brand-intro h1 { color: #8b1a1a; font-size: 28px; text-transform: uppercase; }
 
-        /* --- PHẦN QUY TRÌNH NÂNG CẤP (TABS) --- */
         .process-tab-section { padding: 50px 5%; background: #e67e22; margin: 30px 20px; border-radius: 40px; text-align: center; }
         .tab-menu { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-bottom: 30px; }
         .tab-link {
@@ -100,18 +98,17 @@
         .tab-pane { display: none; animation: fadeIn 0.5s ease-out; }
         .tab-pane.active { display: block; }
 
-        /* NÚT MUA HÀNG THIỆT TO */
+      
         .btn-huge-buy {
             display: block; width: 100%; max-width: 400px; margin: 30px auto 0;
             background: var(--brand-red); color: white; padding: 20px; border-radius: 50px;
             text-decoration: none; font-weight: 800; font-size: 20px; text-align: center;
             border: 2px solid var(--yellow);
             transition: all 0.3s ease;
-            animation: pulseGlow 2s infinite; /* Hiệu ứng nhấp nháy phát sáng */
+            animation: pulseGlow 2s infinite; 
         }
         .btn-huge-buy:hover { transform: scale(1.05) translateY(-3px); background: #a51d1d; animation: none; box-shadow: 0 10px 25px rgba(139, 26, 26, 0.5); }
 
-        /* --- TÁC DỤNG SỨC KHỎE --- */
         .health-section { background: #3d251e; color: #fdf5e6; padding: 60px 8%; margin: 30px 20px; border-radius: 40px; }
         .benefit-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; margin-top: 35px; }
         .benefit-card { 
@@ -121,12 +118,11 @@
         .benefit-card:hover { transform: translateY(-10px); background: rgba(255,255,255,0.15); box-shadow: 0 15px 30px rgba(0,0,0,0.3); }
         .benefit-card h4 { color: var(--yellow); font-size: 22px; margin-top: 0; }
 
-        /* --- GALLERY & PRODUCTS --- */
         .section-title { text-align: center; margin: 50px 0 30px; font-weight: 700; }
         .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; padding: 0 5%; }
         .gallery-item { height: 250px; border-radius: 20px; overflow: hidden; cursor: pointer; }
         .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
-        .gallery-item:hover img { transform: scale(1.15) rotate(2deg); } /* Zoom và xoay nhẹ ảnh */
+        .gallery-item:hover img { transform: scale(1.15) rotate(2deg); } 
 
         .product-section { background: #faedcd; padding: 60px 5%; margin-top: 50px; border-radius: 50px 50px 0 0; }
         .product-grid { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; }
@@ -146,14 +142,14 @@
 
         footer { background: var(--primary); color: #d0c4bc; padding: 40px 5%; text-align: center; }
 
-        /* Nút liên hệ nhanh (Trôi nổi) */
+ 
         .contact-bar { position: fixed; bottom: 20px; right: 20px; display: flex; flex-direction: column; gap: 15px; z-index: 2000; }
         .icon-link { 
             width: 55px; height: 55px; border-radius: 50%; display: flex; align-items: center; justify-content: center; 
             color: white; font-size: 22px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); transition: all 0.3s ease;
-            animation: float 3s ease-in-out infinite; /* Cho nút lơ lửng */
+            animation: float 3s ease-in-out infinite; 
         }
-        /* Tạo delay cho nút dưới để lơ lửng so le nhau */
+      
         .icon-link:nth-child(2) { animation-delay: 1.5s; }
         .icon-link:hover { transform: scale(1.15) !important; animation-play-state: paused; }
     </style>
@@ -292,7 +288,7 @@
     </div>
 
     <script>
-        // 1. Script cho chức năng Tabs
+ 
         function openTab(evt, tabName) {
             var i, tabpane, tablinks;
             tabpane = document.getElementsByClassName("tab-pane");
@@ -305,12 +301,11 @@
                 tablinks[i].className = tablinks[i].className.replace(" active", "");
             }
             document.getElementById(tabName).style.display = "block";
-            // Kích hoạt animation khi mở tab
+  
             setTimeout(() => { document.getElementById(tabName).classList.add("active"); }, 10);
             evt.currentTarget.className += " active";
         }
 
-        // 2. Script kích hoạt animation khi cuộn trang (Scroll Reveal)
         document.addEventListener("DOMContentLoaded", function() {
             const reveals = document.querySelectorAll(".reveal");
 
@@ -318,12 +313,12 @@
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add("active");
-                        // Ngừng theo dõi sau khi đã hiện lên để tối ưu hiệu suất
+                      
                         observer.unobserve(entry.target); 
                     }
                 });
             }, { 
-                threshold: 0.15, // Hiện khi 15% phần tử lọt vào màn hình
+                threshold: 0.15, 
                 rootMargin: "0px 0px -50px 0px" 
             });
 
